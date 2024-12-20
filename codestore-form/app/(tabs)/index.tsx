@@ -1,4 +1,3 @@
-// Import necessary libraries
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -31,11 +30,20 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleInputChange = (key: any, value: any) => {
+  const handleInputChange = (key: string, value: string) => {
     setFormData({ ...formData, [key]: value });
   };
 
+  const validateForm = () => {
+    return Object.values(formData).every((field) => field.trim() !== "");
+  };
+
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      Alert.alert("Error", "All fields are required.");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -99,85 +107,29 @@ export default function App() {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Register User</Text>
       <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Name"
-          value={formData.name}
-          onChangeText={(value) => handleInputChange("name", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={formData.email}
-          onChangeText={(value) => handleInputChange("email", value)}
-          keyboardType="email-address"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          value={formData.username}
-          onChangeText={(value) => handleInputChange("username", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Phone"
-          value={formData.phone}
-          onChangeText={(value) => handleInputChange("phone", value)}
-          keyboardType="phone-pad"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Website"
-          value={formData.website}
-          onChangeText={(value) => handleInputChange("website", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Street"
-          value={formData.street}
-          onChangeText={(value) => handleInputChange("street", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Suite"
-          value={formData.suite}
-          onChangeText={(value) => handleInputChange("suite", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="City"
-          value={formData.city}
-          onChangeText={(value) => handleInputChange("city", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Zipcode"
-          value={formData.zipcode}
-          onChangeText={(value) => handleInputChange("zipcode", value)}
-          keyboardType="number-pad"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Company Name"
-          value={formData.companyName}
-          onChangeText={(value) => handleInputChange("companyName", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Catch Phrase"
-          value={formData.catchPhrase}
-          onChangeText={(value) => handleInputChange("catchPhrase", value)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Business Strategy (BS)"
-          value={formData.bs}
-          onChangeText={(value) => handleInputChange("bs", value)}
-        />
+        {Object.keys(formData).map((key) => (
+          <TextInput
+            key={key}
+            style={styles.input}
+            placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+            value={formData[key]}
+            onChangeText={(value) => handleInputChange(key, value)}
+            keyboardType={
+              key === "email"
+                ? "email-address"
+                : key === "phone" || key === "zipcode"
+                ? "number-pad"
+                : "default"
+            }
+          />
+        ))}
         <TouchableOpacity
-          style={[styles.button, loading && styles.buttonDisabled]}
+          style={[
+            styles.button,
+            (!validateForm() || loading) && styles.buttonDisabled,
+          ]}
           onPress={handleSubmit}
-          disabled={loading}
+          disabled={!validateForm() || loading}
         >
           <Text style={styles.buttonText}>
             {loading ? "Submitting..." : "Register"}
@@ -188,7 +140,7 @@ export default function App() {
 
       <Text style={styles.title}>User List</Text>
       {loading ? (
-        <ActivityIndicator size="large" color="#6200EE" />
+        <ActivityIndicator size="large" color="#007BFF" />
       ) : error ? (
         <Text style={styles.error}>{error}</Text>
       ) : (
@@ -237,12 +189,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#F9FAFC",
+    backgroundColor: "#FAFAFA",
   },
   title: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "600",
-    color: "#333",
+    color: "#007BFF",
     textAlign: "center",
     marginBottom: 20,
   },
@@ -251,36 +203,31 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    padding: 12,
+    padding: 15,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#CED4DA",
     borderRadius: 8,
     marginBottom: 12,
     backgroundColor: "#FFFFFF",
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    elevation: 1,
   },
   button: {
-    backgroundColor: "#6200EE",
+    backgroundColor: "#007BFF",
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
-    shadowColor: "#6200EE",
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 3,
+    elevation: 2,
   },
   buttonDisabled: {
-    backgroundColor: "#999",
+    backgroundColor: "#6C757D",
   },
   buttonText: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 16,
+    fontWeight: "600",
   },
   error: {
-    color: "#D32F2F",
+    color: "#D9534F",
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 10,
@@ -290,12 +237,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
-    elevation: 2,
+    elevation: 1,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
   cardTitle: {
     fontSize: 18,
