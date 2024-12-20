@@ -1,0 +1,70 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+
+    public static boolean isPrime(int num) {
+        if (num <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int[] rearrangeArray(int[] arr) {
+        List<Integer> primes = new ArrayList<>();
+        List<Integer> nonPrimes = new ArrayList<>();
+
+        for (int num : arr) {
+            if (isPrime(num)) {
+                primes.add(num);
+            } else {
+                nonPrimes.add(num);
+            }
+        }
+
+        if (primes.isEmpty()) {
+            Arrays.sort(arr);
+            return arr;
+        }
+
+        int largestPrime = Collections.max(primes);
+        int smallestPrime = Collections.min(primes);
+
+        nonPrimes.remove(Integer.valueOf(largestPrime));
+        nonPrimes.remove(Integer.valueOf(smallestPrime));
+
+        Collections.sort(nonPrimes, Collections.reverseOrder());
+
+        int[] result = new int[arr.length];
+        result[0] = largestPrime;
+        result[result.length - 1] = smallestPrime;
+        for (int i = 0; i < nonPrimes.size(); i++) {
+            result[i + 1] = nonPrimes.get(i);
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the size of the array: ");
+        int size = scanner.nextInt();
+
+        int[] arr = new int[size];
+        System.out.println("Enter the elements of the array: ");
+        for (int i = 0; i < size; i++) {
+            arr[i] = scanner.nextInt();
+        }
+
+        System.out.println("Original array: " + Arrays.toString(arr));
+        System.out.println("Rearranged array: " + Arrays.toString(rearrangeArray(arr)));
+    }
+}
