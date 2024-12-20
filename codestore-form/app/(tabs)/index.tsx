@@ -9,6 +9,7 @@ import {
   Alert,
   StyleSheet,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 
 export default function App() {
@@ -42,9 +43,7 @@ export default function App() {
       );
       const data = await response.json();
       Alert.alert("Success", `User registered with ID: ${data.id}`);
-
       setUsers((prevUsers) => [...prevUsers, data]);
-
       setFormData({ name: "", email: "", username: "" });
     } catch (err) {
       setError("Failed to register user.");
@@ -75,7 +74,7 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Register User</Text>
       <View style={styles.form}>
         <TextInput
@@ -121,13 +120,24 @@ export default function App() {
           renderItem={({ item }) => (
             <View style={styles.card}>
               <Text style={styles.cardTitle}>{item.name}</Text>
-              <Text style={styles.cardText}>Email: {item.email}</Text>
               <Text style={styles.cardText}>Username: {item.username}</Text>
+              <Text style={styles.cardText}>Email: {item.email}</Text>
+              <Text style={styles.cardText}>Phone: {item.phone}</Text>
+              <Text style={styles.cardText}>Website: {item.website}</Text>
+              <Text style={styles.cardText}>Address:</Text>
+              <Text style={styles.cardSubText}>
+                {item.address.street}, {item.address.suite}, {item.address.city}
+                ,{item.address.zipcode}
+              </Text>
+              <Text style={styles.cardText}>Company:</Text>
+              <Text style={styles.cardSubText}>{item.company.name}</Text>
+              <Text style={styles.cardSubText}>{item.company.catchPhrase}</Text>
+              <Text style={styles.cardSubText}>{item.company.bs}</Text>
             </View>
           )}
         />
       )}
-    </View>
+    </ScrollView>
   );
 }
 
@@ -179,21 +189,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 15,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#ddd",
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 3,
+    shadowRadius: 4,
+    elevation: 2,
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
+    marginBottom: 5,
   },
   cardText: {
     fontSize: 14,
     color: "#555",
+    marginBottom: 2,
+  },
+  cardSubText: {
+    fontSize: 13,
+    color: "#777",
+    marginBottom: 2,
+    paddingLeft: 10,
   },
 });
