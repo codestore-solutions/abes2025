@@ -1,0 +1,21 @@
+export default function App() {
+    return(
+      <form>
+          <h1>login form </h1>
+          <div>
+              <input type="text" placeholder="
+                  enter email id here" className="login"/>
+              <input type="text" placeholder="enter your name here" classname="login"/>
+              <input type="text" placeorder="enter your password here" 
+                  classNAme ="password"/>
+              fetch=('CodeStore-Solution/abes205',{
+              })
+              .then (respne){
+                console.log("Hello !!")
+              }
+                  
+              
+          </div>
+        </form>
+      );
+  }
