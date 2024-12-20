@@ -1,0 +1,102 @@
+solution no 1
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		int row,i,j,space=1;
+		System.out.print("Enter the number of rows you want to print: ");
+		Scanner sc = new Scanner(System.in);
+		row = sc.nextInt();
+		space = row - 1;
+		for (j = 1; j<= row; j++)
+		{
+			for (i = 1; i<= space; i++)
+			{
+				System.out.print(" ");
+			}
+			space--;
+			for (i = 1; i <= 2 * j - 1; i++)
+			{
+				System.out.print("*");
+			}
+			System.out.println("");
+		}
+		space = 1;
+		for (j = 1; j<= row - 1; j++)
+		{
+			for (i = 1; i<= space; i++)
+			{
+				System.out.print(" ");
+			}
+			space++;
+			for (i = 1; i<= 2 * (row - j) - 1; i++)
+			{
+				System.out.print("*");
+			}
+			System.out.println("");
+
+		}
+	}
+}
+
+
+
+
+
+
+
+solution no 2
+import java.util.*;
+
+public class Main {
+    
+    // Function to check if a number is prime
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(num); ++i) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+      
+        List<Integer> arr = new ArrayList<>(Arrays.asList(5, 1, 8, 11, 2));
+        
+        List<Integer> primes = new ArrayList<>();
+        
+      
+        for (int num : arr) {
+            if (isPrime(num)) {
+                primes.add(num);
+            }
+        }
+
+        if (primes.isEmpty()) {
+            System.out.println("No primes in the array.");
+            return;
+        }
+
+       
+        int largestPrime = Collections.max(primes);
+        int smallestPrime = Collections.min(primes);
+
+       
+        arr.removeAll(Collections.singleton(largestPrime));
+        arr.removeAll(Collections.singleton(smallestPrime));
+
+        
+        arr.sort(Collections.reverseOrder());
+
+
+        arr.add(0, largestPrime);
+        arr.add(smallestPrime);
+
+       
+        System.out.print("Rearranged array: ");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+}
