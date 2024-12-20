@@ -203,14 +203,28 @@ export default function App() {
               <Text style={styles.cardText}>Phone: {item.phone}</Text>
               <Text style={styles.cardText}>Website: {item.website}</Text>
               <Text style={styles.cardText}>Address:</Text>
-              <Text style={styles.cardSubText}>
-                {item.address.street}, {item.address.suite}, {item.address.city}
-                ,{item.address.zipcode}
-              </Text>
+              {item.address ? (
+                <Text style={styles.cardSubText}>
+                  {item.address.street}, {item.address.suite},{" "}
+                  {item.address.city}, {item.address.zipcode}
+                </Text>
+              ) : (
+                <Text style={styles.cardSubText}>No Address Provided</Text>
+              )}
               <Text style={styles.cardText}>Company:</Text>
-              <Text style={styles.cardSubText}>{item.company.name}</Text>
-              <Text style={styles.cardSubText}>{item.company.catchPhrase}</Text>
-              <Text style={styles.cardSubText}>{item.company.bs}</Text>
+              {item.company ? (
+                <>
+                  <Text style={styles.cardSubText}>{item.company.name}</Text>
+                  <Text style={styles.cardSubText}>
+                    {item.company.catchPhrase}
+                  </Text>
+                  <Text style={styles.cardSubText}>{item.company.bs}</Text>
+                </>
+              ) : (
+                <Text style={styles.cardSubText}>
+                  No Company Information Provided
+                </Text>
+              )}
             </View>
           )}
         />
