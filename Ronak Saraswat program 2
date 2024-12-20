@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+
+bool isPrime(int num) {
+    if (num <= 1) return false;
+    for (int i = 2; i <= std::sqrt(num); ++i) {
+        if (num % i == 0) return false;
+    }
+    return true;
+}
+
+int
+main() {
+    std::vector<int> arr = {5, 1, 8, 11, 2};
+   
+ 
+    std::vector<int> primes;
+    for (int num : arr) {
+        if (isPrime(num)) {
+            primes.push_back(num);
+        }
+    }
+   
+   
+    if (primes.empty()) {
+        std::cout << "No primes in the array.\n";
+        return 0;
+    }
+
+   
+    int largestPrime = *std::max_element(primes.begin(), primes.end());
+    int smallestPrime = *std::min_element(primes.begin(), primes.end());
+   
+    arr.erase(std::remove(arr.begin(), arr.end(), largestPrime), arr.end());
+    arr.erase(std::remove(arr.begin(), arr.end(), smallestPrime), arr.end());
+   
+ 
+    std::sort(arr.begin(), arr.end(), std::greater<int>());
+   
+   
+    arr.insert(arr.begin(), largestPrime);
+    arr.push_back(smallestPrime);
+   
+   
+    std::cout << "Rearranged array: ";
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << "\n";
+
+    return 0;
+}
