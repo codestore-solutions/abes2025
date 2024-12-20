@@ -1,0 +1,64 @@
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+bool isPrime(int n) {
+    if (n <= 1) return false;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+vector<int> transformArray(vector<int>& arr) {
+    vector<int> primes, nonPrimes;
+
+ 
+    for (int num : arr) {
+        if (isPrime(num)) {
+            primes.push_back(num);
+        } else {
+            nonPrimes.push_back(num);
+        }
+    }
+
+
+    if (primes.empty()) return arr;
+
+
+    int largestPrime = *max_element(primes.begin(), primes.end());
+    int smallestPrime = *min_element(primes.begin(), primes.end());
+
+ 
+    primes.erase(remove(primes.begin(), primes.end(), largestPrime), primes.end());
+    primes.erase(remove(primes.begin(), primes.end(), smallestPrime), primes.end());
+
+    
+    nonPrimes.insert(nonPrimes.end(), primes.begin(), primes.end());
+    sort(nonPrimes.begin(), nonPrimes.end(), greater<int>());
+
+  
+    vector<int> result;
+    result.push_back(largestPrime);
+    result.insert(result.end(), nonPrimes.begin(), nonPrimes.end());
+    result.push_back(smallestPrime);
+
+    return result;
+}
+
+int main() {
+    vector<int> arr = {5, 1, 8, 11, 2}; 
+    vector<int> result = transformArray(arr);
+
+ 
+    cout << "Output: ";
+    for (int num : result) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
