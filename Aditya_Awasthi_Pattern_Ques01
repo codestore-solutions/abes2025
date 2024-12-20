@@ -1,0 +1,39 @@
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) {
+        int rows = 7;
+        int currentRow = 1;
+        int column;
+
+        do {
+            column = 1;
+            do {
+                System.out.print(" ");
+            } while (++column <= rows - currentRow + 1);
+
+            column = 1;
+            do {
+                System.out.print("*");
+            } while (++column <= currentRow * 2 - 1);
+
+            System.out.println();
+        } while (++currentRow <= rows);
+
+        currentRow = rows - 1;
+
+        do {
+            column = 1;
+            do {
+                System.out.print(" ");
+            } while (++column <= rows - currentRow + 1);
+
+            column = 1;
+            do {
+                System.out.print("*");
+            } while (++column <= currentRow * 2 - 1);
+
+            System.out.println();
+        } while (--currentRow > 0);
+    }
+}
