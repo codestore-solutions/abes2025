@@ -7,7 +7,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const password = document.getElementById('password').value;
 
     try {
-      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', {
+      const response = await axios.post('https://jsonplaceholder.typicode.com/users', {
         name,
         email,
         password
