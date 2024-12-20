@@ -1,0 +1,35 @@
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def rearrange(arr):
+    primes = []
+    non_primes = []
+    
+    for x in arr:
+        if is_prime(x):
+            primes.append(x)
+        else:
+            non_primes.append(x)
+    
+    primes.sort()
+    non_primes.sort(reverse=True)
+    
+    if primes:
+        largest_prime = primes.pop()
+        smallest_prime = primes.pop(0)
+        a = primes + non_primes
+        a.sort(reverse=True)
+        result = [largest_prime] + a + [smallest_prime]
+        
+    else:
+        result = non_primes
+    
+    return result
+
+a = list(map(int, input("Enter numbers separated by spaces: ").split()))
+print(rearrange(a))
