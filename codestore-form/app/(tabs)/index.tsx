@@ -17,6 +17,15 @@ export default function App() {
     name: "",
     email: "",
     username: "",
+    phone: "",
+    website: "",
+    street: "",
+    suite: "",
+    city: "",
+    zipcode: "",
+    companyName: "",
+    catchPhrase: "",
+    bs: "",
   });
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -44,7 +53,20 @@ export default function App() {
       const data = await response.json();
       Alert.alert("Success", `User registered with ID: ${data.id}`);
       setUsers((prevUsers) => [...prevUsers, data]);
-      setFormData({ name: "", email: "", username: "" });
+      setFormData({
+        name: "",
+        email: "",
+        username: "",
+        phone: "",
+        website: "",
+        street: "",
+        suite: "",
+        city: "",
+        zipcode: "",
+        companyName: "",
+        catchPhrase: "",
+        bs: "",
+      });
     } catch (err) {
       setError("Failed to register user.");
     } finally {
@@ -96,6 +118,62 @@ export default function App() {
           value={formData.username}
           onChangeText={(value) => handleInputChange("username", value)}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Phone"
+          value={formData.phone}
+          onChangeText={(value) => handleInputChange("phone", value)}
+          keyboardType="phone-pad"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Website"
+          value={formData.website}
+          onChangeText={(value) => handleInputChange("website", value)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Street"
+          value={formData.street}
+          onChangeText={(value) => handleInputChange("street", value)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Suite"
+          value={formData.suite}
+          onChangeText={(value) => handleInputChange("suite", value)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="City"
+          value={formData.city}
+          onChangeText={(value) => handleInputChange("city", value)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Zipcode"
+          value={formData.zipcode}
+          onChangeText={(value) => handleInputChange("zipcode", value)}
+          keyboardType="number-pad"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Company Name"
+          value={formData.companyName}
+          onChangeText={(value) => handleInputChange("companyName", value)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Catch Phrase"
+          value={formData.catchPhrase}
+          onChangeText={(value) => handleInputChange("catchPhrase", value)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Business Strategy (BS)"
+          value={formData.bs}
+          onChangeText={(value) => handleInputChange("bs", value)}
+        />
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
           onPress={handleSubmit}
@@ -110,7 +188,7 @@ export default function App() {
 
       <Text style={styles.title}>User List</Text>
       {loading ? (
-        <ActivityIndicator size="large" color="#007BFF" />
+        <ActivityIndicator size="large" color="#6200EE" />
       ) : error ? (
         <Text style={styles.error}>{error}</Text>
       ) : (
@@ -145,11 +223,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f4f4f9",
+    backgroundColor: "#F9FAFC",
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 26,
+    fontWeight: "600",
     color: "#333",
     textAlign: "center",
     marginBottom: 20,
@@ -159,18 +237,26 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    padding: 10,
+    padding: 12,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 5,
-    marginBottom: 10,
-    backgroundColor: "#fff",
+    borderRadius: 8,
+    marginBottom: 12,
+    backgroundColor: "#FFFFFF",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   button: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#6200EE",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 8,
     alignItems: "center",
+    shadowColor: "#6200EE",
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 3,
   },
   buttonDisabled: {
     backgroundColor: "#999",
@@ -180,38 +266,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   error: {
-    color: "red",
+    color: "#D32F2F",
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 10,
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 8,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#E0E0E0",
+    elevation: 2,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
   },
   cardTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "600",
     color: "#333",
-    marginBottom: 5,
+    marginBottom: 8,
   },
   cardText: {
     fontSize: 14,
     color: "#555",
-    marginBottom: 2,
+    marginBottom: 4,
   },
   cardSubText: {
     fontSize: 13,
     color: "#777",
-    marginBottom: 2,
+    marginBottom: 4,
     paddingLeft: 10,
   },
 });
